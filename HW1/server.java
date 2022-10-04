@@ -4,7 +4,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 
 class ClientThread extends Thread
@@ -25,6 +24,7 @@ class ClientThread extends Thread
         {
             while (true)
             {   
+                
                 OutputStream os=socket.getOutputStream();
                 InputStream IS = socket.getInputStream();
                 byte[] bt = new byte[256];
@@ -134,7 +134,7 @@ public class server
 {
     public static void main (String[] args)
     {
-        Scanner input = new Scanner(System.in);
+        
         ServerSocket serverSocket = null;
         try
         {   // 서버소켓을 생성, 8080 포트와 binding
@@ -142,7 +142,7 @@ public class server
             ConnectThread connectThread = new ConnectThread(serverSocket);
             connectThread.start();
             
-            int temp = input.nextInt(); // 스레드 생성 전에 숫자를 입력하면 바로 SERVER CLOSE!
+            
         } catch (IOException e)
         {
             e.printStackTrace();
