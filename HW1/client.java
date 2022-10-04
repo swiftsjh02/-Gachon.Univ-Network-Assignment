@@ -6,7 +6,7 @@ import java.net.*;
 public class client {
     public static void main(String[] args){
         String ip="localhost";
-        String port="8080";
+        String port="12345";
 
         BufferedReader fromserver = null;
 		BufferedReader stin = null;
@@ -15,7 +15,7 @@ public class client {
 		Socket socket = null;
 
         try{
-            File file= new File("/Users/jihoseo/Library/Mobile Documents/com~apple~CloudDocs/GCUfile/network/HW1/server_info.dat");
+            File file= new File("HW1/server_info.dat");
             FileReader filereader = new FileReader(file);
             BufferedReader bufReader = new BufferedReader(filereader);
             String line="";

@@ -24,13 +24,32 @@ class ClientThread extends Thread
         try
         {
             while (true)
-            {
+            {   
+                OutputStream os=socket.getOutputStream();
                 InputStream IS = socket.getInputStream();
                 byte[] bt = new byte[256];
                 int size = IS.read(bt);
                 
                 String output = new String(bt, 0, size, "UTF-8");
-                System.out.println("Thread " + id + " >  " + output);
+                String[] command= output.split(" ");
+                String[] args=command[1].split(",");
+                int result=0;
+                if(command[0].toUpperCase().equals("ADD")){
+                    result=Integer.parseInt(args[0])+Integer.parseInt(args[1]);
+                }
+                else if(command[0].toUpperCase().equals("MINUS")){
+                    result=Integer.parseInt(args[0])-Integer.parseInt(args[1]);
+                }
+                else if(command[0].toUpperCase().equals("DIV")){
+                    result=Integer.parseInt(args[0])/Integer.parseInt(args[1]);
+                }
+                else if(command[0].toUpperCase().equals("MUL")){
+                    result=Integer.parseInt(args[0])*Integer.parseInt(args[1]);
+                }
+                String result_string=Integer.toString(result);
+                System.out.println("Thread " + id + " >  result:" + result);
+                os.write(result_string.getBytes());
+                os.flush();
             }
         } catch (IOException e)
         {
