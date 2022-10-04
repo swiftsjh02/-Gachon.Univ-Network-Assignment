@@ -6,7 +6,7 @@ import java.net.*;
 public class client {
     public static void main(String[] args){
         String ip="localhost";
-        String port="12345";
+        String port="8080";
 
         InputStream is=null;
 		BufferedReader stin = null;
