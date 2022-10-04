@@ -8,7 +8,7 @@ public class client {
         String ip="localhost";
         String port="12345";
 
-        BufferedReader fromserver = null;
+        InputStream is=null;
 		BufferedReader stin = null;
 		BufferedWriter toserver = null;
 
@@ -40,7 +40,7 @@ public class client {
         try {
 			socket = new Socket(ip, Integer.parseInt(port)); 
 
-			fromserver = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
+			is=socket.getInputStream();
 			stin = new BufferedReader(new InputStreamReader(System.in)); 
 
 			toserver = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -51,13 +51,21 @@ public class client {
 				if (outputMessage.equalsIgnoreCase("bye")) { 
 					toserver.write(outputMessage);
 					toserver.flush();
+					byte[] data = new byte[256];
+					int n = is.read(data);
+					final String result=new String(data,0,n);
+					System.out.println(result);
 					break;
 				}
 				toserver.write(outputMessage); 
 				toserver.flush();
 
-				String inputMessage = fromserver.readLine(); 
-				System.out.println(inputMessage); 
+				byte[] data = new byte[256];
+				int n = is.read(data);
+				final String result=new String(data,0,n);
+				System.out.println("result: "+result);
+				
+				
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
