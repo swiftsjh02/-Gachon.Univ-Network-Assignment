@@ -33,7 +33,7 @@ class Capitalizer implements Runnable{
 
 
 public class CapitalizeServer {
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         try{
         ServerSocket listner = new ServerSocket(8080);
         System.out.println("The Capitalize Server is running...");
