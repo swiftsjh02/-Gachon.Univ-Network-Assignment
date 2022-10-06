@@ -125,6 +125,7 @@ class ConnectThread extends Thread
             }
         } catch (IOException e)
         {
+            System.out.println(e);
             System.out.println("    SERVER CLOSE    ");
         }
     }
@@ -138,7 +139,7 @@ public class server
         ServerSocket serverSocket = null;
         try
         {   // 서버소켓을 생성, 8080 포트와 binding
-            serverSocket = new ServerSocket(8080); // 생성자 내부에 bind()가 있고, bind() 내부에 listen() 있음
+            serverSocket = new ServerSocket(); // 생성자 내부에 bind()가 있고, bind() 내부에 listen() 있음
             ConnectThread connectThread = new ConnectThread(serverSocket);
             connectThread.start();
             
