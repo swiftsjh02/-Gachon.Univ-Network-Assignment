@@ -16,10 +16,10 @@ public class client {
 		byte sizeofcode=data[0]; //sizeofcode에 data의 첫번째 byte 저장
 		byte sizeofresult=data[sizeofcode+1]; //sizeofresult에 data[sizeofcode+1]에 있는 결과값의 길이 저장
 		String code=new String(data,1,sizeofcode); //code에 data의 1번째 byte부터 sizeofcode만큼의 byte를 String으로 변환하여 저장
-		System.out.println(code);
+		System.out.println("Status: "+code);
 		if(sizeofresult!=0){
 			String result=new String(data,sizeofcode+2,sizeofresult); //result에 data의 sizeofcode+2번째 byte부터 sizeofresult만큼의 byte를 String으로 변환하여 저장
-			System.out.println(result);
+			System.out.println("Result: "+result);
 		}
 		
 	}
