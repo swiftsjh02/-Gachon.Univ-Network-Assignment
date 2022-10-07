@@ -15,14 +15,13 @@ public class client {
 		}
 		byte sizeofcode=data[0]; //sizeofcode에 data의 첫번째 byte 저장
 		byte sizeofresult=data[sizeofcode+1]; //sizeofresult에 data[sizeofcode+1]에 있는 결과값의 길이 저장
-		for(int i=1; i<sizeofcode+1; i++){ //STATUS 값 출력
-			System.out.print((char)data[i]);
-			}
-		System.out.println();
-		for(int i=sizeofcode+1; i<sizeofcode+sizeofresult+2; i++){ //RESULT 값 출력
-			System.out.print((char)data[i]);
-				}
-		System.out.println();
+		String code=new String(data,1,sizeofcode); //code에 data의 1번째 byte부터 sizeofcode만큼의 byte를 String으로 변환하여 저장
+		System.out.println(code);
+		if(sizeofresult!=0){
+			String result=new String(data,sizeofcode+2,sizeofresult); //result에 data의 sizeofcode+2번째 byte부터 sizeofresult만큼의 byte를 String으로 변환하여 저장
+			System.out.println(result);
+		}
+		
 	}
     public static void main(String[] args){
         String ip="localhost"; // 기본 서버 주소와 포트를 하드코드방식으로 지정
@@ -41,11 +40,8 @@ public class client {
             String line="";
             line=bufReader.readLine();
             ip=line;
-            System.out.println(line);
             line=bufReader.readLine();
             port=line;
-            System.out.println(line);
-
             bufReader.close();
 
 

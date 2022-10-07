@@ -24,9 +24,7 @@ class MsgSend{ //메시지를 보내는 클래스 , 2개의 메소드를 포함
                 packet[i]=data[i-sizeofcode-2];
             }
 
-            for(int i=0; i<packet.length; i++){
-                System.out.println(packet[i]);
-            }
+            
             os.write(packet);
             os.flush();
 
@@ -52,9 +50,6 @@ class MsgSend{ //메시지를 보내는 클래스 , 2개의 메소드를 포함
             }
             packet[sizeofcode+1]=(byte)sizeofdata;
 
-            for(int i=0; i<packet.length; i++){
-                System.out.println(packet[i]);
-            }
             os.write(packet);
             os.flush();
 
