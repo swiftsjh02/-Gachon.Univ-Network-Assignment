@@ -4,18 +4,38 @@ import java.net.*;
 
 
 public class client {
+
+	public static void recvMsg(InputStream is){
+		byte[] data = new byte[256]; //서버로 부터 받은 byte 배열 공간 생성
+		try{
+			is.read(data); //서버로 부터 받은 byte 배열을 data에 저장
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+		byte sizeofcode=data[0]; //sizeofcode에 data의 첫번째 byte 저장
+		byte sizeofresult=data[sizeofcode+1]; //sizeofresult에 data[sizeofcode+1]에 있는 결과값의 길이 저장
+		for(int i=1; i<sizeofcode+1; i++){ //STATUS 값 출력
+			System.out.print((char)data[i]);
+			}
+		System.out.println();
+		for(int i=sizeofcode+1; i<sizeofcode+sizeofresult+2; i++){ //RESULT 값 출력
+			System.out.print((char)data[i]);
+				}
+		System.out.println();
+	}
     public static void main(String[] args){
-        String ip="localhost";
+        String ip="localhost"; // 기본 서버 주소와 포트를 하드코드방식으로 지정
         String port="8080";
 
-        InputStream is=null;
-		BufferedReader stin = null;
-		BufferedWriter toserver = null;
+        InputStream is=null; // 서버로부터 받은 메시지를 읽어들이기 위한 InputStream
+		BufferedReader stin = null; // 키보드로부터 입력받기 위한 BufferedReader
+		BufferedWriter toserver = null; // 서버로 메시지를 보내기 위한 BufferedWriter
 
-		Socket socket = null;
+		Socket socket = null; // 서버와 통신하기 위한 소켓
 
         try{
-            File file= new File("HW1/server_info.dat");
+            File file= new File("HW1/server_info.dat"); // 서버 주소와 포트를 저장한 파일을 읽어들이기 위한 File 객체
             FileReader filereader = new FileReader(file);
             BufferedReader bufReader = new BufferedReader(filereader);
             String line="";
@@ -30,40 +50,34 @@ public class client {
 
 
         }
-        catch(FileNotFoundException e){
+        catch(FileNotFoundException e){ // 파일이 없을 경우
             System.out.println("no file found, Run Program as default ip and port");
         }
-        catch(Exception e){
+        catch(Exception e){ //그 외의 에러 발생시
             System.out.println(e);
         }
 
         try {
-			socket = new Socket(ip, Integer.parseInt(port)); 
+			socket = new Socket(ip, Integer.parseInt(port));  // 서버와 통신을 위한 소켓 생성
 
-			is=socket.getInputStream();
-			stin = new BufferedReader(new InputStreamReader(System.in)); 
+			is=socket.getInputStream(); // 서버로부터 받은 메시지를 읽어들이기 위한 InputStream
+			stin = new BufferedReader(new InputStreamReader(System.in)); // 키보드로부터 입력받기 위한 BufferedReader
 
-			toserver = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			toserver = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())); // 서버로 메시지를 보내기 위한 BufferedWriter
 
-			String outputMessage;
+			String outputMessage; // 서버로 보낼 메시지를 저장할 변수
 			while (true) {
-				outputMessage = stin.readLine(); 
-				if (outputMessage.equalsIgnoreCase("bye")) { 
-					toserver.write(outputMessage);
-					toserver.flush();
-					byte[] data = new byte[256];
-					int n = is.read(data);
-					final String result=new String(data,0,n);
-					System.out.println(result);
-					break;
+				outputMessage = stin.readLine(); // 키보드로부터 입력받은 메시지를 outputMessage에 저장
+				if (outputMessage.equalsIgnoreCase("bye")) {  // bye를 입력받으면 
+					toserver.write(outputMessage); //서버에게 bye를 보냄
+					toserver.flush(); // 버퍼를 비움
+					recvMsg(is); // 서버로부터 받은 메시지를 출력
+					break; //소켓 연결 종료
 				}
-				toserver.write(outputMessage); 
-				toserver.flush();
+				toserver.write(outputMessage);  // bye가 아닌 다른 메시지를 입력받으면 서버로 메시지를 보냄
+				toserver.flush(); // 버퍼를 비움
 
-				byte[] data = new byte[256];
-				int n = is.read(data);
-				final String result=new String(data,0,n);
-				System.out.println("result: "+result);
+				recvMsg(is); // 서버로부터 받은 결과를 recvMsg 함수를 통해 출력
 				
 				
 			}
