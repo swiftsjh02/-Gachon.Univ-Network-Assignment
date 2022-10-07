@@ -122,20 +122,20 @@ class ClientThread extends Thread
                 }
                 double result=0; //계산 결과를 저장할 변수
                 if(command[0].toUpperCase().equals("ADD")){
-                    result=Integer.parseInt(args[0])+Integer.parseInt(args[1]);
+                    result=Double.parseDouble(args[0])+Double.parseDouble(args[1]);
                 }
                 else if(command[0].toUpperCase().equals("MINUS")){
-                    result=Integer.parseInt(args[0])-Integer.parseInt(args[1]);
+                    result=Double.parseDouble(args[0])-Double.parseDouble(args[1]);
                 }
                 else if(command[0].toUpperCase().equals("DIV")){
-                    if(Integer.parseInt(args[1])==0){//나누는 수가 0인 경우 에러메세지를 보냄
+                    if(Double.compare(Double.parseDouble(args[1]),0)==0){//나누는 수가 0인 경우 에러메세지를 보냄
                         msgsend.sendMsg(os,"DIVZERO");
                         continue;
                     }
-                    result=Double.parseDouble(args[0])/Integer.parseInt(args[1]);
+                    result=Double.parseDouble(args[0])/Double.parseDouble(args[1]);
                 }
                 else if(command[0].toUpperCase().equals("MUL")){
-                    result=Integer.parseInt(args[0])*Integer.parseInt(args[1]);
+                    result=Double.parseDouble(args[0])*Double.parseDouble(args[1]);
                 }
                 else{
                     msgsend.sendMsg(os,"WCMD"); //명령어가 존재하지 않는 경우 에러메세지를 보냄
