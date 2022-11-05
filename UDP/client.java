@@ -12,7 +12,7 @@ public class client {
             Scanner sc= new Scanner(System.in);
 			String msg = sc.nextLine();
 			byte[] bf = msg.getBytes();					
-			DatagramPacket dp = new DatagramPacket(bf, bf.length,InetAddress.getByName("localhost"),9999);
+			DatagramPacket dp = new DatagramPacket(bf, bf.length,InetAddress.getByName("localhost"),6060);
 			
 			bf= new byte[300];
 			DatagramSocket ds_recv= new DatagramSocket(8080);

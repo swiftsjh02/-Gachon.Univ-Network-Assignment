@@ -12,7 +12,7 @@ public class localdns {
 	    
 		try {
 			ExecutorService thread = Executors.newFixedThreadPool(10);
-			DatagramSocket ds = new DatagramSocket(9999);
+			DatagramSocket ds = new DatagramSocket(6060);
 
 			while(true){
 				System.out.println("Waiting for a packet reception..");	
@@ -42,8 +42,10 @@ class dns implements Runnable{
 
 	@Override
 	public void run(){
+		map.put("google.com", "8.8.8.8");
 		String rs1 = new String(bf);
 		String rs2 = rs1.trim();
+		byte[] bf2= new byte[300];
 		try{
 		DatagramSocket ds= new DatagramSocket();
 		Inet4Address clientip=(Inet4Address)dp.getAddress();
@@ -59,8 +61,8 @@ class dns implements Runnable{
 		}else{
 			System.out.println("Cache hit");
 			String ip=map.get(rs2);
-			bf=ip.getBytes();
-			DatagramPacket dp_send= new DatagramPacket(bf,bf.length,clientip,8080);
+			bf2=ip.getBytes();
+			DatagramPacket dp_send= new DatagramPacket(bf2,bf2.length,clientip,8080);
 			ds.send(dp_send);
 				}
 		}catch(Exception e){
