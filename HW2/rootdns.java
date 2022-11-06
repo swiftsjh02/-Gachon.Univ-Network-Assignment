@@ -1,18 +1,19 @@
-package UDP;
+package HW2;
+
 import java.net.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class localdns {
+public class rootdns {
 	
 
 	public static void main(String args[]) {
 	    
 		try {
 			ExecutorService thread = Executors.newFixedThreadPool(10);
-			DatagramSocket ds = new DatagramSocket(6060);
+			DatagramSocket ds = new DatagramSocket(25584);
 
 			while(true){
 				System.out.println("Waiting for a packet reception..");	
@@ -29,11 +30,12 @@ public class localdns {
 
 class dns implements Runnable{
 
+
 	private DatagramPacket dp;
 	private byte[] bf;
-	public HashMap<String,String> map = new HashMap<>();
-    static public int rootport = 9090;
-	static public String rootip = "localhost";
+	static public HashMap<String,String> map = new HashMap<>();
+    static public int comport = 7070;
+	static public String comip = "localhost";
 
 	dns(byte[] bf,DatagramPacket dp){
 		this.bf=bf;
@@ -42,36 +44,27 @@ class dns implements Runnable{
 
 	@Override
 	public void run(){
-		if(map.get("www.google.com") == null){
-			map.put("www.google.com","8.8.8.8");
-		}
-
-		
 		String rs1 = new String(bf);
 		String rs2 = rs1.trim();
-		byte[] bf2= new byte[300];
+		String lastpart = rs2.substring(rs2.lastIndexOf('.')+1);
 		try{
 		DatagramSocket ds= new DatagramSocket();
 		Inet4Address clientip=(Inet4Address)dp.getAddress();
 		int clientport=dp.getPort();
 		System.out.println("IP:" + clientip + "  Port#:"+ clientport);
 		System.out.println("message: " + rs2);
-		if(map.get(rs2)==null){
-			System.out.println("Cache missed");
-			System.out.println("Sending request to rootdns");
-			bf=rs2.getBytes();
-			DatagramPacket dp_send=new DatagramPacket(bf,bf.length,InetAddress.getByName(rootip),rootport);
+
+		if(lastpart.equals("com")){
+            String ipport=comip+":"+String.valueOf(comport);
+            byte[] bf3 = new byte[300];
+			bf3=ipport.getBytes();
+			DatagramPacket dp_send = new DatagramPacket(bf3, bf3.length, clientip, clientport);
 			ds.send(dp_send);
-		}else{
-			System.out.println("Cache hit");
-			String ip=map.get(rs2);
-			bf2=ip.getBytes();
-			DatagramPacket dp_send= new DatagramPacket(bf2,bf2.length,clientip,8080);
-			ds.send(dp_send);
-				}
-		}catch(Exception e){
-			System.out.println(e);
 		}
+	}
+	catch(IOException e){}
+
+
 		
 	}
 }

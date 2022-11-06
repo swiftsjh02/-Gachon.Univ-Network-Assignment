@@ -1,4 +1,5 @@
-package UDP;
+package HW2;
+
 import java.net.*;
 import java.io.*;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ class dns implements Runnable{
 	private DatagramPacket dp;
 	private byte[] bf;
 	public HashMap<String,String> map = new HashMap<>();
-    static public int rootport = 9090;
+    static public int rootport = 25584;
 	static public String rootip = "localhost";
 
 	dns(byte[] bf,DatagramPacket dp){
@@ -57,11 +58,16 @@ class dns implements Runnable{
 		System.out.println("IP:" + clientip + "  Port#:"+ clientport);
 		System.out.println("message: " + rs2);
 		if(map.get(rs2)==null){
+            byte[] bf3= new byte[300];
 			System.out.println("Cache missed");
 			System.out.println("Sending request to rootdns");
 			bf=rs2.getBytes();
 			DatagramPacket dp_send=new DatagramPacket(bf,bf.length,InetAddress.getByName(rootip),rootport);
+            DatagramPacket dp_from_tld=new DatagramPacket(bf3,bf3.length);
 			ds.send(dp_send);
+            ds.receive(dp_from_tld);
+            String ipport=new String(dp_from_tld.getData());
+            System.out.println(ipport);
 		}else{
 			System.out.println("Cache hit");
 			String ip=map.get(rs2);
