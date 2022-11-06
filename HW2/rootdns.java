@@ -2,7 +2,6 @@ package HW2;
 
 import java.net.*;
 import java.io.*;
-import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,7 +12,7 @@ public class rootdns {
 	    
 		try {
 			ExecutorService thread = Executors.newFixedThreadPool(10);
-			DatagramSocket ds = new DatagramSocket(25584);
+			DatagramSocket ds = new DatagramSocket(25597);
 
 			while(true){
 				System.out.println("Waiting for a packet reception..");	
@@ -33,7 +32,6 @@ class dns implements Runnable{
 
 	private DatagramPacket dp;
 	private byte[] bf;
-	static public HashMap<String,String> map = new HashMap<>();
     static public int comport = 7070;
 	static public String comip = "localhost";
 
@@ -49,7 +47,7 @@ class dns implements Runnable{
 		String lastpart = rs2.substring(rs2.lastIndexOf('.')+1);
 		try{
 		DatagramSocket ds= new DatagramSocket();
-		Inet4Address clientip=(Inet4Address)dp.getAddress();
+		InetAddress clientip=dp.getAddress();
 		int clientport=dp.getPort();
 		System.out.println("IP:" + clientip + "  Port#:"+ clientport);
 		System.out.println("message: " + rs2);

@@ -33,7 +33,7 @@ class dns implements Runnable{
 	private DatagramPacket dp;
 	private byte[] bf;
 	public HashMap<String,String> map = new HashMap<>();
-    static public int rootport = 25584;
+    static public int rootport = 25597;
 	static public String rootip = "localhost";
 
 	dns(byte[] bf,DatagramPacket dp){
@@ -53,13 +53,13 @@ class dns implements Runnable{
 		byte[] bf2= new byte[300];
 		try{
 		DatagramSocket ds= new DatagramSocket();
-		Inet4Address clientip=(Inet4Address)dp.getAddress();
+		InetAddress clientip=dp.getAddress();
 		int clientport=dp.getPort();
 		System.out.println("IP:" + clientip + "  Port#:"+ clientport);
 		System.out.println("message: " + rs2);
 		if(map.get(rs2)==null){
             byte[] bf3= new byte[300];
-			System.out.println("Cache missed");
+			System.out.println("Cache miss");
 			System.out.println("Sending request to rootdns");
 			bf=rs2.getBytes();
 			DatagramPacket dp_send=new DatagramPacket(bf,bf.length,InetAddress.getByName(rootip),rootport);
@@ -72,7 +72,7 @@ class dns implements Runnable{
 			System.out.println("Cache hit");
 			String ip=map.get(rs2);
 			bf2=ip.getBytes();
-			DatagramPacket dp_send= new DatagramPacket(bf2,bf2.length,clientip,8080);
+			DatagramPacket dp_send= new DatagramPacket(bf2,bf2.length,clientip,clientport);
 			ds.send(dp_send);
 				}
 		}catch(Exception e){
