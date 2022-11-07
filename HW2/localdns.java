@@ -13,7 +13,7 @@ public class localdns {
 	    
 		try {
 			ExecutorService thread = Executors.newFixedThreadPool(10);
-			DatagramSocket ds = new DatagramSocket(6060);
+			DatagramSocket ds = new DatagramSocket(6090);
 			map.put("google.com","8.8.8.8");
 
 			while(true){
@@ -24,7 +24,9 @@ public class localdns {
 				thread.execute(new dns(received,dp));
 			}
 			
-		} catch(IOException e) {}
+		} catch(IOException e) {
+			System.out.println(e);
+		}
 	}
 
 	private static class dns implements Runnable{

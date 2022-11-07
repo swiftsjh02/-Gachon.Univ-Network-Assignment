@@ -34,7 +34,7 @@ public class client {
 			String msg = sc.nextLine(); //도메인 입력받기
 
 			byte[] bf = Protocol_To_Byte(msg,(byte)2);			
-			DatagramPacket dp = new DatagramPacket(bf, bf.length,InetAddress.getByName("localhost"),6060);
+			DatagramPacket dp = new DatagramPacket(bf, bf.length,InetAddress.getByName("localhost"),6090);
 			
 			bf= new byte[300];
 			DatagramPacket dp_recv= new DatagramPacket(bf,bf.length);
