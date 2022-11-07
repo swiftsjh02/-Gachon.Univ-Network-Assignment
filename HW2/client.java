@@ -52,6 +52,7 @@ public class client {
 			for(int i=2+query_len;i<2+query_len+ip_len;i++){
 				System.out.print((char)bf[i]);
 			}
+			System.out.println();
 			
 			
 		

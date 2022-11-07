@@ -9,6 +9,12 @@ public class rootdns {
 
 	static public int comport = 7070;
 	static public String comip = "localhost";
+	static public int ukport = 9898;
+	static public String ukip = "localhost";
+	static public int netport = 2828;
+	static public String netip = "localhost";
+	static public int krport = 8282;
+	static public String krip = "localhost";
 	
 
 	public static void main(String args[]) {
@@ -60,6 +66,27 @@ public class rootdns {
 	
 			if(lastpart.equals("com")){
 				String ipport=comip+":"+String.valueOf(comport);
+				byte[] bf3 = new byte[300];
+				bf3=ipport.getBytes();
+				DatagramPacket dp_send = new DatagramPacket(bf3, bf3.length, clientip, clientport);
+				ds.send(dp_send);
+			}
+			if(lastpart.equals("net")){
+				String ipport=netip+":"+String.valueOf(netport);
+				byte[] bf3 = new byte[300];
+				bf3=ipport.getBytes();
+				DatagramPacket dp_send = new DatagramPacket(bf3, bf3.length, clientip, clientport);
+				ds.send(dp_send);
+			}
+			if(lastpart.equals("kr")){
+				String ipport=krip+":"+String.valueOf(krport);
+				byte[] bf3 = new byte[300];
+				bf3=ipport.getBytes();
+				DatagramPacket dp_send = new DatagramPacket(bf3, bf3.length, clientip, clientport);
+				ds.send(dp_send);
+			}
+			if(lastpart.equals("uk")){
+				String ipport=ukip+":"+String.valueOf(ukport);
 				byte[] bf3 = new byte[300];
 				bf3=ipport.getBytes();
 				DatagramPacket dp_send = new DatagramPacket(bf3, bf3.length, clientip, clientport);

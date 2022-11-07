@@ -4,36 +4,36 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class com {
+public class uk {
 	public static HashMap<String,String> map = new HashMap<>();
 
 	public static void main(String args[]) {
 
-        map.put("google.com","8.8.8.8");
-        map.put("naver.com","1.1.1.1");
+        map.put("google.uk","9.9.8.8");
+        map.put("naver.uk","1.8.1.8");
 	    
 		try {
 			ExecutorService thread = Executors.newFixedThreadPool(10);
-			DatagramSocket ds = new DatagramSocket(7070);
+			DatagramSocket ds = new DatagramSocket(9898);
 
 			while(true){
 				System.out.println("Waiting for a packet reception..");	
 				byte[] received = new byte[300];
 				DatagramPacket dp = new DatagramPacket(received,  received.length);
 				ds.receive(dp);
-				thread.execute(new dns_com(received,dp));
+				thread.execute(new dns_uk(received,dp));
 			}
 			
 		} catch(IOException e) {}
 	}
 
-    private static class dns_com implements Runnable{
+    private static class dns_uk implements Runnable{
 
         private DatagramPacket dp;
         private byte[] bf;
     
     
-        dns_com(byte[] bf,DatagramPacket dp){
+        dns_uk(byte[] bf,DatagramPacket dp){
             this.bf=bf;
             this.dp=dp;
         }
