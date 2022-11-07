@@ -92,6 +92,8 @@ public class rootdns {
 				DatagramPacket dp_send = new DatagramPacket(bf3, bf3.length, clientip, clientport);
 				ds.send(dp_send);
 			}
+
+			
 		}
 		catch(IOException e){}
 	
