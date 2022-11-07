@@ -5,36 +5,36 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class uk {
+public class kr {
 	public static HashMap<String,String> map = new HashMap<>();
 
 	public static void main(String args[]) {
 
-        map.put("google.uk","9.9.8.8");
-        map.put("naver.uk","1.8.1.8");
+        map.put("gov.kr","12.7.8.8");
+        map.put("gachon.ac.kr","7.7.7.7");
 	    
 		try {
 			ExecutorService thread = Executors.newFixedThreadPool(10);
-			DatagramSocket ds = new DatagramSocket(9898);
+			DatagramSocket ds = new DatagramSocket(2828);
 
 			while(true){
 				System.out.println("Waiting for a packet reception..");	
 				byte[] received = new byte[300];
 				DatagramPacket dp = new DatagramPacket(received,  received.length);
 				ds.receive(dp);
-				thread.execute(new dns_uk(received,dp));
+				thread.execute(new dns_kr(received,dp));
 			}
 			
 		} catch(IOException e) {}
 	}
 
-    private static class dns_uk implements Runnable{
+    private static class dns_kr implements Runnable{
 
         private DatagramPacket dp;
         private byte[] bf;
     
     
-        dns_uk(byte[] bf,DatagramPacket dp){
+        dns_kr(byte[] bf,DatagramPacket dp){
             this.bf=bf;
             this.dp=dp;
         }
@@ -75,7 +75,6 @@ public class uk {
 
 
 }
-
 
 
 
