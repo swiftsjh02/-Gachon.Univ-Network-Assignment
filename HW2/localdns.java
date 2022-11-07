@@ -14,7 +14,7 @@ public class localdns {
 		try {
 			ExecutorService thread = Executors.newFixedThreadPool(10);
 			DatagramSocket ds = new DatagramSocket(6060);
-			map.put("www.google.com","8.8.8.8");
+			map.put("google.com","8.8.8.8");
 
 			while(true){
 				System.out.println("Waiting for a packet reception..");	
